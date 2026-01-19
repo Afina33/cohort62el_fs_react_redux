@@ -1,9 +1,11 @@
+import Feedback from "components/Feedback/Feedback";
+import { PageWrapper } from "./style";
 
 
 export default function Homeworrk_17() {
     return(
-        <div>
-            <h1>hallo</h1>
-        </div>
+       <PageWrapper>
+        <Feedback/>
+       </PageWrapper>
     );
 }
