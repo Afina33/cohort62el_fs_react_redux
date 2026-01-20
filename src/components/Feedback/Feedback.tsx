@@ -1,30 +1,36 @@
 import Button from "components/Button/Button";
+import { Buttonwithcount_container, Count, Feedback_control, FeedbackWrapper } from "./styles"
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import {  feedbackSliceActions, feedbackSliceSelectors } from "store/redux/feedbackSlice/feedbackSlice";
 
-import { type FeedbackProps } from "./types";
-import "./styles.css";
 
-function Feedback({
-  like,
-  dislike,
-  onDislike,
-  onLike,
-  resetResults,
-}: FeedbackProps) {
+export default function Feedback() {
+   const dispatch = useAppDispatch()
+    const like = useAppSelector(feedbackSliceSelectors.likeCount);
+    const dislike = useAppSelector(feedbackSliceSelectors.dislikeCount);
+   
+  const onLike = ()=>{
+    dispatch(feedbackSliceActions.like())
+  };
+  const onDislike = ()=>{
+    dispatch(feedbackSliceActions.dislike())
+  };
+  const onResetResults = ()=>{
+   dispatch(feedbackSliceActions.reset())
+  };
   return (
-    <div className="feedback-wrapper">
-      <div className="feedback-control">
-        <div className="buttonwithcount-container">
-          <Button name="Like" onClick={onLike} />
-          <p className="count">{like}</p>
-        </div>
-        <div className="buttonwithcount-container">
-          <Button name="Dislike" onClick={onDislike} />
-          <p className="count">{dislike}</p>
-        </div>
-      </div>
-      <Button name="Reset Results" onClick={resetResults} />
-    </div>
+   <FeedbackWrapper>
+      <Feedback_control>
+        <Buttonwithcount_container>
+          <Button name="Like" onClick={onLike}/>
+          <Count>{like}</Count>
+        </Buttonwithcount_container>
+        <Buttonwithcount_container>
+          <Button name="Dislike" onClick={onDislike}/>
+          <Count>{dislike}</Count>
+        </Buttonwithcount_container>
+      </Feedback_control>
+      <Button name="Reset Results" onClick={onResetResults}/>
+   </FeedbackWrapper>
   );
 }
-
-export default Feedback;
